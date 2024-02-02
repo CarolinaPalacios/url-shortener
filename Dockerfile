@@ -4,9 +4,11 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
+RUN npm install -g pnpm
+
 FROM base AS dev
 ENV NODE_ENV=dev
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 COPY . .
 CMD ["pnpm", "run", "start:dev"]
 
