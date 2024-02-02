@@ -1,5 +1,7 @@
 ## Quick Start
 
+In the `main` branch, you will find the basic setup of the project. This includes the essential files to get started and initialize the application. Follow the steps below to set up the project in its basic form:
+
 1. Install [Node.js](https://nodejs.org/en/download/) - _for IDE type checking_.
 2. Install [Pnpm](https://pnpm.io/installation) - _for IDE type checking_.
 3. Install [Docker Compose](https://docs.docker.com/compose/install/) and make sure it is running in the system background.
@@ -52,8 +54,3 @@ pnpm docker-compose:test:watch
 ```bash
 pnpm docker-compose:prod
 ```
-
-## VSCode Extensions
-
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
