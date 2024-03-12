@@ -8,7 +8,7 @@ RUN npm install -g pnpm
 
 FROM base AS dev
 ENV NODE_ENV=dev
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 COPY . .
 CMD ["pnpm", "run", "start:dev"]
 
