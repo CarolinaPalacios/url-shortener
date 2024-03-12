@@ -2,7 +2,7 @@ FROM node:16.14.2-alpine AS base
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "pnpm-lock.yaml", "./"]
 
 RUN npm install -g pnpm
 
