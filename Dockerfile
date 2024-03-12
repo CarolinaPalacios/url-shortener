@@ -28,6 +28,6 @@ FROM base AS prod
 ENV NODE_ENV=production
 RUN pnpm install --frozen-lockfile --production
 COPY . .
-RUN pnpm global add @nestjs/cli
+RUN pnpm install -g @nestjs/cli
 RUN pnpm run build
 CMD ["pnpm", "run", "start:prod"]
