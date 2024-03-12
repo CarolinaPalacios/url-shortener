@@ -1,3 +1,8 @@
+# NestJS URL Shortener
+
+[![codecov](https://codecov.io/gh/CarolinaPalacios/url-shortener/branch/main/graph/badge.svg)](https://codecov.io/gh/CarolinaPalacios/url-shortener)
+[![CI/CD](https://github.com/CarolinaPalacios/url-shortener/actions/workflows/ci.yml/badge.svg)](https://github.com/CarolinaPalacios/url-shortener/actions/workflows/ci.yml)
+
 ## Quick Start
 
 In the `main` branch, you will find the basic setup of the project. This includes the essential files to get started and initialize the application. Follow the steps below to set up the project in its basic form:
