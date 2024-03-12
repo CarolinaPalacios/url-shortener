@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsWhere, Repository } from 'typeorm';
@@ -25,8 +26,11 @@ export class LinksService {
     try {
       return await this.linksRepository.save(link);
     } catch (error) {
-      if (error.code == '23505')
+      if (error.code == '23505') {
         throw new ConflictException('Short name already in use');
+      } else {
+        throw new InternalServerErrorException();
+      }
     }
   }
 
@@ -46,6 +50,8 @@ export class LinksService {
     const link = await this.getLink({ id });
     link.name = name;
     link.url = url;
-    return await this.linksRepository.save(link);
+    await this.linksRepository.save(link);
+
+    return link;
   }
 }
