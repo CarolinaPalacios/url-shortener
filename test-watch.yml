@@ -3,4 +3,4 @@ services:
     build:
       target: test-watch
     volumes:
-      - ./.git:/app/.git
+      - .git:/app/.git

@@ -2,13 +2,16 @@ FROM node:16.14.2-alpine AS base
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "pnpm-lock.yaml", "./"]
 
 RUN npm install -g pnpm
+RUN npm install -g @nestjs/cli
+
+ENV PNPM_HOME=/usr/local/lib/pnpm
 
 FROM base AS dev
 ENV NODE_ENV=dev
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 COPY . .
 CMD ["pnpm", "run", "start:dev"]
 
@@ -28,6 +31,5 @@ FROM base AS prod
 ENV NODE_ENV=production
 RUN pnpm install --frozen-lockfile --production
 COPY . .
-RUN pnpm global add @nestjs/cli
 RUN pnpm run build
 CMD ["pnpm", "run", "start:prod"]
