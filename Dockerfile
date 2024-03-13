@@ -5,6 +5,7 @@ WORKDIR /app
 COPY ["package.json", "pnpm-lock.yaml", "./"]
 
 RUN npm install -g pnpm
+RUN npm install -g @nestjs/cli
 
 ENV PNPM_HOME=/usr/local/lib/pnpm
 
@@ -30,8 +31,5 @@ FROM base AS prod
 ENV NODE_ENV=production
 RUN pnpm install --frozen-lockfile --production
 COPY . .
-SHELL ["/bin/sh", "-c"]
-RUN export SHELL=/bin/sh && pnpm setup
-RUN pnpm install -g @nestjs/cli
 RUN pnpm run build
 CMD ["pnpm", "run", "start:prod"]
