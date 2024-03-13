@@ -212,4 +212,84 @@ describe('Links', () => {
       expect(deletedLink).toBeNull();
     });
   });
+
+  describe('@PATCH /links/:id', () => {
+    it('should not accept invalid id', async () => {
+      const invalidData = createInvalidLinkIds();
+      const promises: Array<Promise<void>> = [];
+
+      invalidData.forEach((id) => {
+        promises.push(
+          (async () => {
+            const res = await request(app.getHttpServer()).patch(
+              `/links/${id}`,
+            );
+            expect(res.status).toBe(400);
+            expect(res.body.error).toBe('Bad Request');
+            expect(res.body.message).toEqual(
+              expect.arrayContaining([expect.any(String)]),
+            );
+          })(),
+        );
+      });
+
+      await Promise.all(promises);
+    });
+
+    it('should not accept invalid data', async () => {
+      const id = fakerEN_US.string.uuid();
+      const invalidData = createInvalidLinkBodies();
+      const promises: Array<Promise<void>> = [];
+
+      invalidData.forEach((data) => {
+        promises.push(
+          (async () => {
+            const res = await request(app.getHttpServer())
+              .patch(`/links/${id}`)
+              .send(data);
+
+            expect(res.status).toBe(400);
+            expect(res.body.error).toBe('Bad Request');
+            expect(res.body.message).toEqual(
+              expect.arrayContaining([expect.any(String)]),
+            );
+          })(),
+        );
+      });
+
+      await Promise.all(promises);
+    });
+
+    it('should handle not found', async () => {
+      const id = fakerEN_US.string.uuid();
+      const linkBody = createLinkBody();
+
+      const res = await request(app.getHttpServer())
+        .patch(`/links/${id}`)
+        .send(linkBody);
+
+      expect(res.status).toBe(404);
+      expect(res.body.error).toBe('Not Found');
+      expect(res.body.message).toBe(`Link not found`);
+    });
+
+    it('should handle update', async () => {
+      const link = await createLinkItem();
+      const id = link.id;
+      const newLinkBody = createLinkBody();
+      const res = await request(app.getHttpServer())
+        .patch(`/links/${id}`)
+        .send(newLinkBody);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({
+        ...newLinkBody,
+        id,
+      });
+
+      const updatedLink = await linksRepository.findOneBy({ id });
+
+      expect(updatedLink).toEqual(res.body);
+    });
+  });
 });
