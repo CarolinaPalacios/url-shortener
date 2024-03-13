@@ -30,6 +30,7 @@ FROM base AS prod
 ENV NODE_ENV=production
 RUN pnpm install --frozen-lockfile --production
 COPY . .
+ENV SHELL=/bin/sh
 RUN pnpm setup
 RUN pnpm install -g @nestjs/cli
 RUN pnpm run build
